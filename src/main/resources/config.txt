@@ -1,0 +1,2 @@
+mapper-package=com.lixi.open.mybatis.mapper
+mapper-location=mapper

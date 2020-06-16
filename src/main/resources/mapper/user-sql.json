@@ -1,0 +1,15 @@
+{
+  "cls": "com.lixi.open.mybatis.mapper.UserDao",
+  "methods": [
+    {
+      "method": "count",
+      "pType": "java.lang.String",
+      "sql": "select count(*) from user where name=%s;"
+    },
+    {
+      "method": "find",
+      "pType": "java.lang.Long",
+      "sql": "select * from user where id=%d;"
+    }
+  ]
+}
