@@ -73,24 +73,24 @@ public class Main {
         for (MapperInfo mapperInfo : mapperInfos) {
 
             String daoName = mapperInfo.getCls();
-            Class<?> dao = classNameToCls.get(daoName);
+            Class<?> daoCls = classNameToCls.get(daoName);
 
-            // dao 方法与 json 描述方法的对应
+            // daoCls 方法与 json 描述方法的对应
             Map<Method, MapperMethod> daoMethodToActualMethodToCall = new HashMap<>();
             for (MapperMethod actMethod : mapperInfo.getMethods()) {
                 String pType = actMethod.getPType();
 
-                Method daoMethod = dao.getDeclaredMethod(actMethod.getMethod(), Class.forName(pType));
+                Method daoMethod = daoCls.getDeclaredMethod(actMethod.getMethod(), Class.forName(pType));
                 daoMethodToActualMethodToCall.put(daoMethod, actMethod);
             }
 
-            MapperProxyFactory<?> mapperProxyFactory = new MapperProxyFactory<>(dao, daoMethodToActualMethodToCall);
+            MapperProxyFactory<?> mapperProxyFactory = new MapperProxyFactory<>(daoCls, daoMethodToActualMethodToCall);
 
             // dao类型对应代理类
-            // 动态体现在不需要每一个 dao 写对应的 proxy，而是由程序动态生成 proxy
+            // 动态体现在不需要每一个 daoCls 写对应的 proxy，而是由程序动态生成 proxy
             Object proxy = mapperProxyFactory.newInstance();
-            DAO_TO_PROXY_INSTANCE.put(dao, proxy);
-            log.info("生成 [{}] 对应的 Proxy 实例", dao);
+            DAO_TO_PROXY_INSTANCE.put(daoCls, proxy);
+            log.info("生成 [{}] 对应的 Proxy 实例", daoCls);
         }
     }
 
